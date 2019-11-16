@@ -66,31 +66,31 @@ namespace lab4
             pnk = new double[k, n];
 
             for (int i = 0; i < k; i++) pnk[i, i] = 1;
-            double[,] prov = new double[y, x + 2];
-
-            for (int i = 0; i < y; i++)
+            double[,] prov = new double[y, x + 2]; // вспомогательный массив для генерации, содержит все варианты
+                                                   // предпоследний элемент - количество единиц в строке, последний - сколько раз строка применяется в матрице
+            for (int i = 0; i < y; i++) //числа от 0 до 2^p в двоичной системе
             {
                 pp = i;
                 for (int j = x - 1; j >= 0; j--)
                 {
                     prov[i, j] = pp % 2;
-                    if (prov[i, j] == 1) prov[i, x]++;
+                    if (prov[i, j] == 1) prov[i, x]++; //количество единиц
                     pp /= 2;
                     
                 }
             }
             for (int i = 0; i < k; i++)
             {
-                int h = rand.Next(y);
-                if (prov[h, x] >= 2 && prov[h, x + 1] == 0)
+                int h = rand.Next(y); // берем случайное число из вспомогательного массива
+                if (prov[h, x] >= 2 && prov[h, x + 1] == 0) //если единиц >= 2 и данное число использовалось 0 раз 
                 {
-                    int g = 0;
+                    int g = 0; 
                     for (int j = k; j < n; j++)
                     {
                         pnk[i, j] = prov[h, g];
                         g++;
                     }
-                    prov[h, x + 1] = 1;
+                    prov[h, x + 1]++;
                 }
                 else i--;
             }
@@ -102,7 +102,7 @@ namespace lab4
             for (int i = 0; i < p; i++)
             {
                 for (int j = 0; j < k; j++)
-                    h[i, j] = pnk[j, (k - 0) + i];
+                    h[i, j] = pnk[j, k + i];
                 h[i, k + i] = 1;
             }
         }
@@ -115,7 +115,7 @@ namespace lab4
             for (int kpp = 0; kpp < kol; kpp++)
             {
                
-                for (int i = 0; i < k; i++)
+                for (int i = 0; i < k; i++) //случайная комбинация
                     word[kpp, i] = rand.Next(2);
 
                 for (int i = 0; i < p; i++)
@@ -138,15 +138,15 @@ namespace lab4
 
         void Calc_mis()
         {
-            mis = new double[kol, n];
+            mis = new double[kol, n]; //ошибочный сист. код
             s = new double[kol, p];
-            mis_ind = new int[kol];
+            mis_ind = new int[kol]; //индекс ошибки
             for (int i = 0; i < kol; i++)
                 for (int j = 0; j < n; j++)
                     mis[i, j] = sys_code[i, j];
             for (int kpp = 0; kpp < kol; kpp++)
             {
-                int err = rand.Next(n);
+                int err = rand.Next(n); //случайная позиция ошибки
                 if (mis[kpp, err] == 1) mis[kpp, err] = 0;
                 else mis[kpp, err] = 1;
 

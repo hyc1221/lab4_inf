@@ -20,7 +20,7 @@ namespace lab4
         int k = 24, n, p, dmin = 3, x, y;
         double[,] pnk, hp;
         double[] a, b, s;
-
+        Random rand = new Random();
         private void button1_Click(object sender, EventArgs e)
         {
             Calc_n_p();
@@ -40,7 +40,7 @@ namespace lab4
             x = p;
             int pp = 0;
             y = Convert.ToInt32(Math.Pow(2, p));
-            double[,] prov = new double[y, x + 1];
+            double[,] prov = new double[y, x + 2];
             for (int i = 0; i < y; i++)
             {
                 pp = i;
@@ -59,6 +59,17 @@ namespace lab4
                     richTextBox1.AppendText(prov[i, j].ToString());
                 }
                 richTextBox1.AppendText("\n");
+            }
+            for (int i = 0; i < k; i++)
+            {
+                int h = rand.Next(y);
+                if (prov[h, x] >= 2 && prov[h, x + 1] == 0)
+                {
+                    for (int j = 0; j < x + 2; j++) richTextBox2.AppendText(prov[h, j].ToString());
+                    richTextBox2.AppendText("\n");
+                    prov[h, x + 1] = 1;
+                }
+                else i--;
             }
         }
 

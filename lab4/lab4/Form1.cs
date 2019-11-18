@@ -15,6 +15,7 @@ namespace lab4
         public Form1()
         {
             InitializeComponent();
+            numericUpDown3.Enabled = false;
         }
         int k = 5, n, p, x, y, kol, kp;
         int[]  mis_ind;
@@ -34,9 +35,11 @@ namespace lab4
 
         private void button1_Click(object sender, EventArgs e)
         {
+            numericUpDown3.Enabled = true;
             k = Convert.ToInt32(numericUpDown1.Value);
             kol = Convert.ToInt32(numericUpDown2.Value);
             numericUpDown3.Maximum = numericUpDown2.Value;
+            numericUpDown3.Value = 1;
             kp = 0;
             Calc_n_p();
             Calc_pnk();
